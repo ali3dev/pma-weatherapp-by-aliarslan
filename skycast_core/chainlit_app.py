@@ -9,15 +9,33 @@ load_dotenv()
 # Read backend URL from environment so Chainlit can call the backend running on port 8000
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
+# Info card for assignment
+INFO_LINK = "https://www.linkedin.com/school/pmaccelerator/"
+DESCRIPTION = (
+    "The Product Manager Accelerator Program supports PM professionals through every "
+    "stage of their careers — from entry-level students to Directors. Our community is "
+    "ambitious and committed, and members gain practical PM and leadership skills.\n\n"
+    "Services include: PMA Pro (job placement & mock interviews), AI PM Bootcamp (build real AI products), "
+    "PMA Power Skills (leadership & presentation training), PMA Leader (promotion coaching), and 1:1 Resume Review."
+)
+
 # Basic logging so you can see Chainlit activity in the terminal where you run Chainlit
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
 @cl.on_chat_start
 async def start():
-    await cl.Message(
-        content="🌤️ **Welcome to SkyCast AI!**\n\nType a city name to get current weather or 5-day forecast."
-    ).send()
+    # Header message with author name and an Info button. Chainlit places messages in the chat flow;
+    # an explicit top-right placement isn't supported via the Python API, so we show this near the header
+    # as the first message users see.
+    header = "🌤️ **Welcome to SkyCast AI!**\n\nType a city name to get current weather or 5-day forecast."
+    # Make the LinkedIn page clickable from the header as a markdown link
+    author_line = "**Built by Ali Arslan Khan** — [PM Accelerator](https://www.linkedin.com/company/product-manager-accelerator)"
+
+    # Button that triggers a small info card explaining PM Accelerator
+    buttons = [cl.Action(name="show_info", payload={}, label="Info")]
+
+    await cl.Message(content=f"{header}\n\n{author_line}", actions=buttons).send()
 
 @cl.on_message
 async def get_weather(message: cl.Message):
@@ -96,3 +114,12 @@ async def show_forecast(action: cl.Action):
     for day in data["forecast"]:
         lines.append(f"{day['date']}: {day['temp']} °C — {day['description'].capitalize()}")
     await cl.Message(content="\n".join(lines)).send()
+
+
+@cl.action_callback("show_info")
+async def show_info(action: cl.Action):
+    # When the user clicks the Info button, show the short description and a link
+    await cl.Message(
+        content=(f"**PM Accelerator**\n\n{DESCRIPTION}\n\n"
+                 f"More info: {INFO_LINK}" )
+    ).send()
