@@ -1,4 +1,4 @@
-# SkyCast - Weather CRUD & Export API with Chainlit UI
+# SkyCast - Weather CRUD & Export API with Chainlit UI  Tech Assessment #2)
 
 Welcome to **SkyCast** – a practical, extensible FastAPI backend combined with a Chainlit chat UI for real-time weather queries, history management, and data exports. Designed for clarity, reliability, and ease of local development, SkyCast demonstrates how to build a conversational weather application with modern Python tooling.
 
