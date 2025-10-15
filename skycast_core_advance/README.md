@@ -245,10 +245,3 @@ This project is provided as-is for learning and demonstration purposes.
 
 ---
 
-If you'd like, I can also:
-- Add a `private/` directory and a small helper that reads an `EPO_PATH` from `.env` (without committing the actual file).
-- Add a small example script showing how to encrypt/decrypt EPO files for local storage.
-
-Tell me whether you want me to add the `private/` folder and helper wiring (I will add `.gitignore` entries and update `.env.example`).
-
-
