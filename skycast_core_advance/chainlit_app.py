@@ -5,11 +5,22 @@ from dotenv import load_dotenv
 load_dotenv()
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
+# Info card for assignment (advance app)
+INFO_LINK = "https://www.linkedin.com/school/pmaccelerator/"
+DESCRIPTION = (
+    "The Product Manager Accelerator Program supports PM professionals through every "
+    "stage of their careers — from entry-level students to Directors. Our community is "
+    "ambitious and committed, and members gain practical PM and leadership skills."
+)
+
 # ----------------------------------------------------------
 # Greeting
 # ----------------------------------------------------------
 @cl.on_chat_start
 async def start():
+    # Add author line with clickable link and an Info button
+    author_line = "**Built by Ali Arslan Khan** — [PMA](https://www.linkedin.com/school/pmaccelerator/)"
+    buttons = [cl.Action(name="show_info", payload={}, label="Info")]
     await cl.Message(
         author="SkyCast",
         content=(
@@ -19,8 +30,9 @@ async def start():
             "• 🏙️ City or Town name\n"
             "• 📮 ZIP / Postal Code (e.g. `94040,US`)\n"
             "• 🧭 GPS Coordinates (e.g. `31.5497,74.3436`)\n\n"
-            "Then choose what you’d like to check 👇"
-        ),
+            "Then choose what you’d like to check 👇\n\n"
+        ) + f"{author_line}",
+        actions=buttons,
     ).send()
 
 # ----------------------------------------------------------
@@ -398,3 +410,10 @@ async def confirm_delete(action: cl.Action):
 async def cancel_delete(action: cl.Action):
     cl.user_session.set("pending_delete_ids", None)
     await cl.Message(content="Deletion cancelled.").send()
+
+
+@cl.action_callback("show_info")
+async def show_info(action: cl.Action):
+    await cl.Message(
+        content=(f"**PM Accelerator**\n\n{DESCRIPTION}\n\nMore info: {INFO_LINK}")
+    ).send()
