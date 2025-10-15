@@ -1,0 +1,3 @@
+[submodule "skycast_core"]
+	path = skycast_core
+	url = https://github.com/ali3dev/skycast_core.git

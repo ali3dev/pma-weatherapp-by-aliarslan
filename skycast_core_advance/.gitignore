@@ -1,0 +1,23 @@
+.env
+.chainlit/
+chainlit.md
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.env.local
+.vscode/
+.idea/
+.DS_Store
+*.log
+exports/
+*.db
+weather_history.db
+dist/
+build/
+coverage/
+htmlcov/
+
+# Ignore local environment files
+.env.local
+.env.*

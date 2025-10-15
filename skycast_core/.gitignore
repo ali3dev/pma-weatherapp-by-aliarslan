@@ -1,0 +1,12 @@
+.env
+.chainlit/
+chainlit.md
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.env.local
+.vscode/
+.idea/
+.DS_Store
+*.log
